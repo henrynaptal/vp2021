@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once("../../../config.php");
     require_once ("fnc_user.php");
 	$author_name = "Henry Naptal";

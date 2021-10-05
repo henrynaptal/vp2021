@@ -1,4 +1,17 @@
 <?php
+    session_start();
+	
+    if(!isset($_SESSION["user_id"])){
+        header("Location: page.php");
+    }
+	
+    if(isset($_GET["logout"])){
+        session_destroy();
+        header("Location: page.php");
+    }
+
+
+
     require_once("../../../config.php");
 	require_once("fnc_films.php");
 	//echo $server_host;

@@ -1,4 +1,17 @@
 <?php
+    //Sessioon algab
+    session_start();
+	    require ("fnc_user.php");
+	
+	//Vaatab, kas on sisselogitud
+	if(!isset($_SESSION["user_id"])){
+        header("Location: page.php");
+    }
+	//Lehelt väljalogimine
+	if(isset($_GET["logout"])){
+        session_destroy();
+        header("Location: page.php");
+    }
 	$author_name = "Henry Naptal";
 	
 ?>
@@ -28,7 +41,12 @@
 	<p>See leht on loodud õppetöö raames ning ei sisalda tõsiseltvõetavat sisu.</p>
 	<p>Õppetöö toimub <a href="https://www.tlu.ee/dt">Tallinna Ülikooli Digitehnoloogiate Instituudis</a>.</p>
 	<hr>
-	<p>Olete sisse logitud!</p>
+	
+	<ul>
+        <li><a href="?logout=1">Logi välja</a></li>
+		<li><a href="list_films.php">Filmide nimekiri</a></li>
+		<li><a href="add_films.php">Lisage filme filmibaasi</a></li>
+    </ul>
 
 </body>
 </html>

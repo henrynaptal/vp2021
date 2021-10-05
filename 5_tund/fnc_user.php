@@ -21,28 +21,32 @@ function sign_up($firstname, $surname, $email, $gender, $birth_date, $password){
 }
 
 function sign_in($email, $password){
-	$conn = new mysqli($GLOBALS["server_host"], $GLOBALS["server_user_name"], $GLOBALS["server_password"], $GLOBALS["database"]);
-	$conn->set_charset("utf8");
-	$stmt = $conn->prepare("SELECT password FROM vprg_users WHERE email=?");
-	echo $conn->error;
-	$stmt->bind_param("s", $email);
-	$stmt->bind_result($password_from_db);
-	$stmt->execute();
-	if($stmt->fetch()){
-		if(password_verify($password, $password_from_db)){
-			//parool õige
-			$stmt->close();
-	        $conn->close();
-			header("Location: home.php");
-			exit();
-		} else {
-			$notice = " Kasutajatunnus või parool oli vale";
-		}
-	} else {
-		$notice = " Kasutajatunnus või salasõna oli vale!";
-	}
+        $notice = null;
+        $conn = new mysqli($GLOBALS["server_host"], $GLOBALS["server_user_name"], $GLOBALS["server_password"], $GLOBALS["database"]);
+        $conn->set_charset("utf8");
+        $stmt = $conn->prepare("SELECT id, firstname, lastname, password FROM vprg_users WHERE email = ?");
+        echo $conn->error;
+        $stmt->bind_param("s", $email);
+        $stmt->bind_result($id_from_db, $firstname_from_db, $lastname_from_db, $password_from_db);
+        $stmt->execute();
+        if($stmt->fetch()){
+            if(password_verify($password, $password_from_db)){
+                $_SESSION["user_id"] = $id_from_db;
+                $_SESSION["first_name"] = $firstname_from_db;
+                $_SESSION["last_name"] = $lastname_from_db;
+				$stmt->close();
+                $conn->close();
+                header("Location: home.php");
+                exit();
+            } else {
+                $notice = "Kasutajanimi voi parool on vale!";
+            }
+        } else {
+            $notice = "Kasutajanimi voi parool on vale!";
+        }
+        
+        $stmt->close();
+        $conn->close();
+        return $notice;
+    }
 	
-	$stmt->close();
-	$conn->close();
-	return $notice;
-}
