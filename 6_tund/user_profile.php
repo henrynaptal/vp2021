@@ -13,9 +13,18 @@ session_start();
 
 
     require_once("../../../config.php");
-	require_once("fnc_films.php");
+	require_once("fnc_user.php");
+	require_once("fnc_general.php");
 	$notice = null;
-	$description = null;
+	$description = read_user_description();
+	
+	if(isset($_POST["profile_submit"])){
+		$description = test_input(filter_var($_POST["description_input"], FILTER_SANITIZE_STRING));
+		$notice = store_user_profile($description, $_POST["bg_color_input"],$_POST["text_color_input"]);
+	}
+	
+	
+	
 	require("page_header.php");
 ?>
 <h1><?php echo $_SESSION["first_name"] ." " .$_SESSION["last_name"]; ?>, veebiprogrammeerimine</h1>
@@ -40,11 +49,11 @@ session_start();
 		<br>
 		<label for="bg_color_input">Taustavärv</label>
         <br>
-		<input type="color" name="bg_color_input" id="bg_color_input" value="<?php echo $_SESSION["bg_color"]; ?>">
+		<input type="color" name="bg_color_input" id="bg_color_input" value="#FFFFFF">
 		<br>
 		<label for="text_color_input">Tekstivärv</label>
 		<br>
-		<input type="color" name="text_color_input" id="text_color_input" value="<?php echo $_SESSION["text_color"]; ?>">
+		<input type="color" name="text_color_input" id="text_color_input" value="#000000">
 		<br>
         <input type="submit" name="profile_submit" value="Salvesta">
     </form>
