@@ -19,7 +19,7 @@
 				$cut_size_h = $image_w;
 				$cut_y = round(($image_h - $cut_size_h) / 2);
 			}	
-		} elseif($keep_orig_proportion){//kui tuleb originaaproportsioone säilitada
+		} elseif($keep_orig_proportion){//kui tuleb originaalproportsioone säilitada
 			if($image_w / $w > $image_h / $h){
 				$new_h = round($image_h / ($image_w / $w));
 			} else {
@@ -37,7 +37,7 @@
 			
 		//loome uue ajutise pildiobjekti
 		$my_new_image = imagecreatetruecolor($new_w, $new_h);
-        //säilitame vajadusel läbipaistvuse (png ja gif piltide jaoks
+        //säilitame vajadusel läbipaistvuse 
         imagesavealpha($my_new_image, true);
         $trans_color = imagecolorallocatealpha($my_new_image, 0, 0, 0, 127);
         imagefill($my_new_image, 0, 0, $trans_color);

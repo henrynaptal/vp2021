@@ -1,5 +1,7 @@
 <?php
-    session_start();
+    //alustame sessiooni
+    require_once("classes/SessionManager.class.php");
+    SessionManager::sessionStart("vp", 0, "/~hennap/vp2021/12_tund", "greeny.cs.tlu.ee");
     require_once("../../../config.php");
     require_once ("fnc_user.php");
 	require_once("fnc_gallery.php");

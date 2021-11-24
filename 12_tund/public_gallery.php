@@ -1,17 +1,5 @@
 <?php
-    //Sessioon alga
-    session_start();
-	    require ("fnc_user.php");
-	
-	//Vaatab, kas on sisselogitud
-	if(!isset($_SESSION["user_id"])){
-        header("Location: page.php");
-    }
-	//Lehelt väljalogimine
-	if(isset($_GET["logout"])){
-        session_destroy();
-        header("Location: page.php");
-    }
+    require_once("use_session.php");
 	$author_name = "Henry Naptal";
 	
 	require_once("../../../config.php");

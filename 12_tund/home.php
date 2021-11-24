@@ -1,17 +1,6 @@
 <?php
-    //Sessioon algab
-    session_start();
-	    require ("fnc_user.php");
+    require_once("use_session.php");
 	
-	//Vaatab, kas on sisselogitud
-	if(!isset($_SESSION["user_id"])){
-        header("Location: page.php");
-    }
-	//Lehelt väljalogimine
-	if(isset($_GET["logout"])){
-        session_destroy();
-        header("Location: page.php");
-    }
 	$author_name = "Henry Naptal";
 	
 	//testin klassi
@@ -20,6 +9,18 @@
 	echo "Teadaolev avalik number: " .$test_object->known_number;
 	$test_object->reveal();
 	unset($test_object); */
+	
+	//küpsised
+	// time() + sekundid, 86400 sekundit 24's tunnis (60 * 60 * 24)
+	
+	setcookie("vpvisitor", $_SESSION["first_name"] ." " .$_SESSION["last_name"], time() + (86400 * 8), "/~hennap/public_html/vp2021/12_tund", "greeny.cs.tlu.ee", isset($_SERVER["HTTPS"]), true);
+	$last_visitor = "pole teada";
+	if(isset($_COOKIE["vpvisitor"]) and !empty($_COOKIE["vpvisitor"])){
+		$last_visitor = $_COOKIE["vpvisitor"];
+	}
+	// cookie kustutamine, aegumine minevikus
+	//time() - 3600
+	
 	
 	require("page_header.php");
 	
@@ -32,6 +33,7 @@
 </head>
 <body>
     <h1><?php echo $author_name; ?>, veebiprogrammeerimine</h1>
+	<?php echo "<p>Eelmine külastaja " .$last_visitor ."</p> \n"; ?>
 	<style type="text/css">
 		  h1
 		  {
@@ -54,6 +56,7 @@
 		<li><a href="gallery_photo_upload.php">Galeriipiltide üleslaadimine</a></li>
 		<li><a href="gallery_public.php">Kasutajatele nähtav galerii</a></li>
 		<li><a href="gallery_own.php">Minu fotode galerii</a></li>
+		<li><a href="add_news.php">Uudiste lisamine</a></li>
     </ul>
 
 </body>

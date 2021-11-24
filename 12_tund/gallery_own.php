@@ -1,15 +1,5 @@
 <?php
-    session_start();
-	
-    if(!isset($_SESSION["user_id"])){
-        header("Location: page.php");
-    }
-	
-    if(isset($_GET["logout"])){
-        session_destroy();
-        header("Location: page.php");
-    }
-
+    require_once("use_session.php");
 
 
     require_once("../../../config.php");
@@ -17,7 +7,7 @@
 	require_once("fnc_gallery.php");
 	$privacy = 2;
     
-    //greeny.cs.tlu.ee/~rinde/vp2021/Ryhm-3/09_tund/gallery_public.php?page=2
+
     $page = 1;
     $limit = 10;
     $photo_count = count_own_photos();
